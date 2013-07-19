@@ -5,7 +5,11 @@ it only returns a string.
 
 To test, run the application,
 open your browser got to your ip and port.
+If you test with a browser, it will crash the
+program after one use....
 
+
+bzero has been fixed.
 
 */
 
@@ -15,19 +19,22 @@ open your browser got to your ip and port.
 #include <iostream>
 #include <vector>
 #include <string>
-//Needed for network
 #include <cstdlib>
-#include <sys/types.h> 
-#include <sys/socket.h>
-#include <netinet/in.h>
-// Needed for OS X
-#include <unistd.h>
+#include <cstring>
+extern "C" {
+	//Needed for network
+	#include <sys/types.h> 
+	#include <sys/socket.h>
+	#include <netinet/in.h>
+}
+
 
 using namespace std;
+#define bzero(b,len) (memset((b), '\0', (len)), (void) 0)
 
 //Structure containing username and ip
 typedef struct User {
-  string name;
+	string name;
 	int ip;
 } User;
 
@@ -92,7 +99,8 @@ int main(int argc, char** argv) {
 	/*
 	Now we need to write zeros all over serv_addr
 	*/
-	//bzero((char *) &serv_addr, sizeof(serv_addr));
+	//bzero((char *) &serv_addr, sizeof(serv_addr)); <-- This shit is depracted
+	memset(&serv_addr, '\0', sizeof(serv_addr));//   <-- This should fix it for now
 
 
 	/*
@@ -163,7 +171,8 @@ void addUser(int socket) {
 	of the server. But first we have to write 0s all over it.
 	*/
 	char buffer[256];
-	//bzero(buffer, 256);
+	//bzero(buffer, 256); <-- This shit is depracted
+	memset(buffer, '\0', sizeof(buffer));//   <-- This should fix it for now
 
 	/*
 	Now we're going to try to read the message...
