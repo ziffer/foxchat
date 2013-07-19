@@ -20,6 +20,8 @@ open your browser got to your ip and port.
 #include <sys/types.h> 
 #include <sys/socket.h>
 #include <netinet/in.h>
+// Needed for OS X
+#include <unistd.h>
 
 using namespace std;
 
