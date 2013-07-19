@@ -1,4 +1,6 @@
 foxchat
 =======
 
-r9k
+Join us on IRC!
+Server: irc.absurd-irc.net
+Channel: #fox
